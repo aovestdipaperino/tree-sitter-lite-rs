@@ -5,6 +5,9 @@ authors = ["Enzo Lombardi <enzinol@gmail.com>"]
 edition = "2024"
 description = "Pure-Rust tree-sitter grammars for tokensave's lite tier (no C, no build.rs)"
 license = "MIT"
+readme = "README.md"
+keywords = ["tree-sitter", "parser", "grammar", "javascript", "python"]
+categories = ["parsing", "development-tools"]
 repository = "https://github.com/aovestdipaperino/tree-sitter-lite-rs"
 
 [dependencies]

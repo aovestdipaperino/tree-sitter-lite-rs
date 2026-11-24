@@ -1,7 +1,35 @@
 # tree-sitter-lite-rs
 
-Pure-Rust tree-sitter grammars for the lite tier: javascript, typescript, tsx, python, rust, go,
-java, c. No C sources and no `build.rs`.
+[![CI](https://github.com/aovestdipaperino/tree-sitter-lite-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/aovestdipaperino/tree-sitter-lite-rs/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Rust](https://img.shields.io/badge/rust-2024-orange.svg)](https://www.rust-lang.org)
+
+Pure-Rust tree-sitter grammars for **javascript, typescript, tsx, python, rust, go, java and c**.
+No C sources, no `build.rs`, no C compiler needed to build the grammars.
+
+The parse tables and lexers are transpiled from the released tree-sitter parsers by
+[c2rs](https://github.com/aovestdipaperino/c2rs). The external scanners that five of the grammars
+need are hand-ported to Rust. The result plugs into the normal `tree-sitter` runtime through the
+usual `tree_sitter_<name>()` symbols.
+
+```toml
+[dependencies]
+tree-sitter = "0.26"
+tree-sitter-lite-rs = { git = "https://github.com/aovestdipaperino/tree-sitter-lite-rs" }
+```
+
+```rust
+let mut parser = tree_sitter::Parser::new();
+parser.set_language(&tree_sitter_lite_rs::python::LANGUAGE.into())?;
+let tree = parser.parse("def f():\n    return 1\n", None).unwrap();
+println!("{}", tree.root_node().to_sexp());
+```
+
+Each grammar module exposes the same constant the upstream crate does: `javascript::LANGUAGE`,
+`typescript::LANGUAGE_TYPESCRIPT`, `tsx::LANGUAGE`, `python::LANGUAGE`, `rust::LANGUAGE`,
+`go::LANGUAGE`, `java::LANGUAGE`, `c::LANGUAGE`.
+
+## Grammars
 
 | Grammar | Source (released crate) | Scanner |
 |---|---|---|
@@ -9,22 +37,56 @@ java, c. No C sources and no `build.rs`.
 | typescript, tsx | tree-sitter-typescript 0.23.2 (regenerated at ABI 15) | ported, shared logic |
 | python | tree-sitter-python 0.25.0 | ported |
 | rust | tree-sitter-rust 0.24.2 (regenerated at ABI 15) | ported |
-| go | tree-sitter-go 0.25.0 | none |
-| java | tree-sitter-java 0.23.5 (regenerated at ABI 15) | none |
-| c | tree-sitter-c 0.24.2 | none |
+| go | tree-sitter-go 0.25.0 | none needed |
+| java | tree-sitter-java 0.23.5 (regenerated at ABI 15) | none needed |
+| c | tree-sitter-c 0.24.2 | none needed |
 
-- `src/<grammar>/parser.rs`: transpiled from the released `parser.c` by [c2rs](https://github.com/aovestdipaperino/c2rs). Regenerate with `tools/regen.sh`.
-- `src/<grammar>/scanner.rs`: hand-ported external scanners. The `isw*` classification of the C
-  scanners is reproduced ASCII-only (the "C" locale), so behaviour is platform-independent.
-- Use the released crate versions, not upstream HEAD: HEAD of tree-sitter-python has grammar
-  changes after 0.25.0.
+The grammars come from the released crate versions, not upstream HEAD: HEAD of tree-sitter-python
+already has grammar changes after 0.25.0.
 
-## Verification
+## What is and is not Rust
 
-Every grammar was differentially tested against the original C with c2rs: all tables, grammar
-corpora, real-world files, byte-level mutants, prefixes, incremental edits, token soup, and a direct
-lexer/scanner comparison on a mock lexer (about 400M lexer calls, 16M scanner scans, 0 mismatches).
-`tests/golden/` holds syntax trees recorded from the C parsers so this crate verifies itself
-without C. tokensave's full integration suite (3088 tests) passes against it.
+The grammar side is pure Rust. The `tree-sitter` runtime that drives it (the incremental parse
+loop) is still C, and is a dependency of anything that parses. So "no C" here means no C in the
+grammar crates.
 
-The `tree-sitter` runtime that consumes these grammars is still C.
+## How it is verified
+
+Every grammar was compared against the original C with c2rs: all tables, the grammar corpora,
+real-world files, byte-level mutants, input prefixes, incremental edits, random token soup, and a
+direct comparison of the C and Rust lexers and scanners on a mock lexer (about 400 million lexer
+calls and 16 million scanner scans, no mismatches). Line coverage of the Rust scanners and lexers
+under those tests is 93 to 100 percent. Parse speed is within about 7 percent of C on real files,
+faster on four of the eight grammars.
+
+`tests/golden/` holds syntax trees recorded from the C parsers, so the crate checks itself without
+needing C, and `tests/regress.rs` pins behaviours of each scanner. `tools/regen.sh` reproduces every
+`parser.rs` byte for byte from the released crates. The unmodified tokensave integration suite
+(3,088 tests) passes against this crate.
+
+## Scanner notes
+
+The C scanners call `iswspace`, `iswalpha` and `iswdigit`. Under the "C" locale, which an embedded
+parser always sees, these are ASCII-only, and the ports reproduce exactly that, so behaviour does
+not depend on the platform libc. The Python scanner differs from the C in one place: the C
+serializer can write one byte past its 1024-byte buffer when many indent levels are nested, and the
+port stops one write earlier instead.
+
+## Layout
+
+| Path | What |
+|---|---|
+| `src/<grammar>/parser.rs` | generated by c2rs, do not edit |
+| `src/<grammar>/scanner.rs` | hand-ported external scanner |
+| `src/abi.rs` | ABI 15 types shared by all grammars |
+| `tests/` | golden and regression tests |
+| `tools/regen.sh` | reproduces the generated files |
+
+## Star history
+
+[![Star History Chart](https://api.star-history.com/svg?repos=aovestdipaperino/tree-sitter-lite-rs&type=Date)](https://star-history.com/#aovestdipaperino/tree-sitter-lite-rs&Date)
+
+## License
+
+[MIT](LICENSE). The parse tables, lexers and scanners are derived from MIT-licensed upstream
+grammars; their notices are in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
