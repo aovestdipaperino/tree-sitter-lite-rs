@@ -1,0 +1,18 @@
+# Not part of the crate: only exists so `cargo fetch --manifest-path tools/fetch/Cargo.toml`
+# unpacks the released grammar crates that tools/regen.sh and tools/verify.sh read.
+[package]
+name = "fetch-grammar-crates"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[workspace]
+
+[dependencies]
+tree-sitter-javascript = "=0.25.0"
+tree-sitter-python = "=0.25.0"
+tree-sitter-rust = "=0.24.2"
+tree-sitter-go = "=0.25.0"
+tree-sitter-java = "=0.23.5"
+tree-sitter-c = "=0.24.2"
+tree-sitter-typescript = "=0.23.2"

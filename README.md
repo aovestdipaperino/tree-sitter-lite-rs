@@ -25,9 +25,12 @@ let tree = parser.parse("def f():\n    return 1\n", None).unwrap();
 println!("{}", tree.root_node().to_sexp());
 ```
 
-Each grammar module exposes the same constant the upstream crate does: `javascript::LANGUAGE`,
-`typescript::LANGUAGE_TYPESCRIPT`, `tsx::LANGUAGE`, `python::LANGUAGE`, `rust::LANGUAGE`,
-`go::LANGUAGE`, `java::LANGUAGE`, `c::LANGUAGE`.
+Each grammar module exposes the same constants the upstream crate does, under the same names:
+`LANGUAGE` (`LANGUAGE_TYPESCRIPT` and `LANGUAGE_TSX` for TypeScript), `NODE_TYPES`
+(`TYPESCRIPT_NODE_TYPES` and `TSX_NODE_TYPES`), and the query constants the upstream crate has
+(`HIGHLIGHTS_QUERY` or `HIGHLIGHT_QUERY`, `TAGS_QUERY`, `LOCALS_QUERY`, `INJECTIONS_QUERY`,
+`JSX_HIGHLIGHT_QUERY`). The data files come from the same released crates and are bundled under
+`data/`; `tests/data.rs` compiles every query against its grammar.
 
 ## Grammars
 
@@ -61,7 +64,9 @@ faster on four of the eight grammars.
 
 `tests/golden/` holds syntax trees recorded from the C parsers, so the crate checks itself without
 needing C, and `tests/regress.rs` pins behaviours of each scanner. `tools/regen.sh` reproduces every
-`parser.rs` byte for byte from the released crates. The unmodified tokensave integration suite
+`parser.rs` byte for byte from the released crates, and the **Verify against C** workflow does that
+on every push (failing if any committed file differs) and then runs the c2rs differential harness
+on Linux for each grammar (`tools/verify.sh`). The unmodified tokensave integration suite
 (3,088 tests) passes against this crate.
 
 ## Scanner notes
@@ -80,7 +85,8 @@ port stops one write earlier instead.
 | `src/<grammar>/scanner.rs` | hand-ported external scanner |
 | `src/abi.rs` | ABI 15 types shared by all grammars |
 | `tests/` | golden and regression tests |
-| `tools/regen.sh` | reproduces the generated files |
+| `data/` | `node-types.json` and queries bundled from the released upstream crates |
+| `tools/regen.sh`, `tools/verify.sh` | reproduce the generated files; differential check against C |
 
 ## Star history
 

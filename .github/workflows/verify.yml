@@ -1,0 +1,48 @@
+name: Verify against C
+
+# Regenerates every parser from the released grammar crates, fails if the committed files differ,
+# then compares each grammar with the original C (tables, lexers, scanners, token soup, mutation,
+# prefix and incremental runs) using the c2rs harness.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  differential:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        grammar: [javascript, typescript, tsx, python, rust, go, java, c]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: aovestdipaperino/c2rs
+          path: c2rs
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            c2rs
+            c2rs/harness
+      - name: tree-sitter CLI
+        run: npm install -g tree-sitter-cli@0.26.7
+      - name: Fetch the released grammar crates
+        run: cargo fetch --manifest-path tools/fetch/Cargo.toml
+      - name: Build c2rs
+        run: cargo build --release --manifest-path c2rs/Cargo.toml
+      - name: Regenerate and check reproducibility
+        run: |
+          KEEP_WORK="$RUNNER_TEMP/work" tools/regen.sh "$PWD/c2rs/target/release/c2rs"
+          git diff --exit-code -- src
+      - name: Differential test
+        run: C2RS="$PWD/c2rs" KEEP_WORK="$RUNNER_TEMP/work" tools/verify.sh ${{ matrix.grammar }}
