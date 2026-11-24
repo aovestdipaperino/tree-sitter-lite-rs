@@ -1,0 +1,14 @@
+[package]
+name = "tree-sitter-lite-rs"
+version = "0.1.0"
+authors = ["Enzo Lombardi <enzinol@gmail.com>"]
+edition = "2024"
+description = "Pure-Rust tree-sitter grammars for tokensave's lite tier (no C, no build.rs)"
+license = "MIT"
+repository = "https://github.com/aovestdipaperino/tree-sitter-lite-rs"
+
+[dependencies]
+tree-sitter-language = "0.1"
+
+[dev-dependencies]
+tree-sitter = "0.26"
