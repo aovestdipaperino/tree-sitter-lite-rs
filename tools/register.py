@@ -19,6 +19,7 @@ ap.add_argument("--const", default="LANGUAGE")
 ap.add_argument("--crate")
 ap.add_argument("--mode", choices=["emit", "regen"], default="emit")
 ap.add_argument("--subdir")
+ap.add_argument("--export", help="symbol suffix when parser.c exports tree_sitter_<export> instead of tree_sitter_<name>")
 a = ap.parse_args()
 n, feat = a.name, f"lang-{a.name}"
 
@@ -53,6 +54,8 @@ def regen(s):
     if a.crate is None or f'"{n}"' in s or f" {n} " in s:
         return s
     sub = f' "{a.subdir}"' if a.subdir else ""
+    if a.export:
+        sub = f' "{a.subdir or "."}" {a.export}'
     line = f'{a.mode} {n:<12}"$REG/{a.crate}"{sub}\n' if a.mode == "emit" else f'regen {n:<12}"$REG/{a.crate}"{sub}\n'
     return s.replace('echo "regenerated;', line + 'echo "regenerated;', 1)
 

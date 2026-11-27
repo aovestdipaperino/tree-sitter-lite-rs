@@ -10,6 +10,8 @@
 pub mod abi;
 #[cfg(feature = "lang-c")]
 pub mod c;
+#[cfg(feature = "lang-dart")]
+pub mod dart;
 #[cfg(feature = "lang-go")]
 pub mod go;
 #[cfg(feature = "lang-java")]
@@ -74,6 +76,11 @@ pub fn language_typescript() -> LanguageFn {
     typescript::LANGUAGE_TYPESCRIPT
 }
 
+#[cfg(feature = "lang-dart")]
+pub fn language_dart() -> LanguageFn {
+    dart::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -96,5 +103,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("tsx", language_tsx()));
     #[cfg(feature = "lang-typescript")]
     langs.push(("typescript", language_typescript()));
+    #[cfg(feature = "lang-dart")]
+    langs.push(("dart", language_dart()));
     langs
 }
