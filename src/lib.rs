@@ -32,6 +32,8 @@ pub mod lua;
 pub mod php;
 #[cfg(feature = "lang-python")]
 pub mod python;
+#[cfg(feature = "lang-qbasic")]
+pub mod qbasic;
 #[cfg(feature = "lang-ruby")]
 pub mod ruby;
 #[cfg(feature = "lang-rust")]
@@ -137,6 +139,11 @@ pub fn language_swift() -> LanguageFn {
     swift::LANGUAGE
 }
 
+#[cfg(feature = "lang-qbasic")]
+pub fn language_qbasic() -> LanguageFn {
+    qbasic::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -177,5 +184,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("php", language_php()));
     #[cfg(feature = "lang-swift")]
     langs.push(("swift", language_swift()));
+    #[cfg(feature = "lang-qbasic")]
+    langs.push(("qbasic", language_qbasic()));
     langs
 }
