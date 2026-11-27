@@ -20,12 +20,16 @@ pub mod go;
 pub mod java;
 #[cfg(feature = "lang-javascript")]
 pub mod javascript;
+#[cfg(feature = "lang-kotlin")]
+pub mod kotlin;
 #[cfg(feature = "lang-lua")]
 pub mod lua;
 #[cfg(feature = "lang-python")]
 pub mod python;
 #[cfg(feature = "lang-rust")]
 pub mod rust;
+#[cfg(feature = "lang-scala")]
+pub mod scala;
 #[cfg(feature = "lang-tsx")]
 pub mod tsx;
 #[cfg(feature = "lang-typescript")]
@@ -88,6 +92,16 @@ pub fn language_cpp() -> LanguageFn {
     cpp::LANGUAGE
 }
 
+#[cfg(feature = "lang-scala")]
+pub fn language_scala() -> LanguageFn {
+    scala::LANGUAGE
+}
+
+#[cfg(feature = "lang-kotlin")]
+pub fn language_kotlin() -> LanguageFn {
+    kotlin::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -114,5 +128,9 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("dart", language_dart()));
     #[cfg(feature = "lang-cpp")]
     langs.push(("cpp", language_cpp()));
+    #[cfg(feature = "lang-scala")]
+    langs.push(("scala", language_scala()));
+    #[cfg(feature = "lang-kotlin")]
+    langs.push(("kotlin", language_kotlin()));
     langs
 }
