@@ -21,6 +21,7 @@ case "$G" in
   cpp)        CSRC="$W/cpp/src" ;;
   scala)      CSRC="$REG/tree-sitter-scala-0.25.1/src" ;;
   kotlin)     CSRC="$W/kotlin/src" ;;
+  ruby)       CSRC="$W/ruby/src" ;;
   *)          CSRC="$W/$G/src" ;;
 esac
 [ -f "$CSRC/parser.c" ] || { echo "no C source for $G at $CSRC" >&2; exit 1; }

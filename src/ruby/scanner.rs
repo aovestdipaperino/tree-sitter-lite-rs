@@ -628,9 +628,10 @@ impl Scanner {
         put(&mut size, self.open_heredocs.len() as u8);
         for heredoc in &self.open_heredocs {
             let wsize = heredoc.word.len() as u32;
-            // The C has the same bound (2 + word.size, while writing 4 + word.size bytes), which
-            // can write up to two bytes past the 1024-byte buffer; kept as is.
-            if size.wrapping_add(2).wrapping_add(wsize) >= SERIALIZATION_BUFFER_SIZE {
+            // The C bound is `size + 2 + word.size >= 1024` while it writes `4 + word.size` bytes,
+            // which can write one byte past the 1024-byte buffer. Check the real size instead: the
+            // result is the same (0, nothing serialized) wherever the C stays in bounds.
+            if size.wrapping_add(4).wrapping_add(wsize) > SERIALIZATION_BUFFER_SIZE {
                 return 0;
             }
             put(&mut size, heredoc.end_word_indentation_allowed as u8);

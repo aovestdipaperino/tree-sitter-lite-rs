@@ -53,4 +53,5 @@ regen dart "$REG/tree-sitter-dart-orchard-0.3.2" . dart_orchard
 regen cpp         "$REG/tree-sitter-cpp-0.23.4"
 emit scala       "$REG/tree-sitter-scala-0.25.1"
 regen kotlin      "$REG/tree-sitter-kotlin-sg-0.4.1"
+regen ruby        "$REG/tree-sitter-ruby-0.23.1"
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"

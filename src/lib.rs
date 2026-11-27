@@ -26,6 +26,8 @@ pub mod kotlin;
 pub mod lua;
 #[cfg(feature = "lang-python")]
 pub mod python;
+#[cfg(feature = "lang-ruby")]
+pub mod ruby;
 #[cfg(feature = "lang-rust")]
 pub mod rust;
 #[cfg(feature = "lang-scala")]
@@ -102,6 +104,11 @@ pub fn language_kotlin() -> LanguageFn {
     kotlin::LANGUAGE
 }
 
+#[cfg(feature = "lang-ruby")]
+pub fn language_ruby() -> LanguageFn {
+    ruby::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -132,5 +139,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("scala", language_scala()));
     #[cfg(feature = "lang-kotlin")]
     langs.push(("kotlin", language_kotlin()));
+    #[cfg(feature = "lang-ruby")]
+    langs.push(("ruby", language_ruby()));
     langs
 }

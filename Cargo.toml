@@ -14,7 +14,7 @@ repository = "https://github.com/aovestdipaperino/tree-sitter-grammars-rs"
 default = ["lite"]
 # Tiers. Each one includes the one below it; pick single languages with the `lang-*` features.
 lite = ["lang-c", "lang-go", "lang-java", "lang-javascript", "lang-python", "lang-rust", "lang-tsx", "lang-typescript"]
-medium = ["lite", "lang-lua", "lang-dart", "lang-cpp", "lang-scala", "lang-kotlin"]
+medium = ["lite", "lang-lua", "lang-dart", "lang-cpp", "lang-scala", "lang-kotlin", "lang-ruby"]
 full = ["medium"]
 
 # Languages (one feature each).
@@ -31,6 +31,7 @@ lang-dart = []
 lang-cpp = []
 lang-scala = []
 lang-kotlin = []
+lang-ruby = []
 
 [dependencies]
 tree-sitter-language = "0.1"
