@@ -86,4 +86,5 @@ emit powershell  "$REG/tree-sitter-powershell-0.26.4"
 emit quint       "$HERE/tools/vendored/tree-sitter-quint-5155d17" quint   # zdavison/tree-sitter-quint @ 5155d17
 regen dockerfile "$HERE/tools/vendored/tree-sitter-dockerfile-0.2.0"   # camdencheek/tree-sitter-dockerfile v0.2.0 (868e44c): src/grammar.json only
 regen protobuf    "$HERE/tools/vendored/tree-sitter-protobuf-0.0.1"   # yusdacra/tree-sitter-protobuf @ 7f873da: src/grammar.json only
+regen ocaml       "$REG/tree-sitter-ocaml-0.24.2" "grammars/ocaml"
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"

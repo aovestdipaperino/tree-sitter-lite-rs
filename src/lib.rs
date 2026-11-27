@@ -44,6 +44,8 @@ pub mod msbasic2;
 pub mod nix;
 #[cfg(feature = "lang-objc")]
 pub mod objc;
+#[cfg(feature = "lang-ocaml")]
+pub mod ocaml;
 #[cfg(feature = "lang-pascal")]
 pub mod pascal;
 #[cfg(feature = "lang-php")]
@@ -249,6 +251,11 @@ pub fn language_protobuf() -> LanguageFn {
     protobuf::LANGUAGE
 }
 
+#[cfg(feature = "lang-ocaml")]
+pub fn language_ocaml() -> LanguageFn {
+    ocaml::LANGUAGE_OCAML
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -321,5 +328,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("dockerfile", language_dockerfile()));
     #[cfg(feature = "lang-protobuf")]
     langs.push(("protobuf", language_protobuf()));
+    #[cfg(feature = "lang-ocaml")]
+    langs.push(("ocaml", language_ocaml()));
     langs
 }
