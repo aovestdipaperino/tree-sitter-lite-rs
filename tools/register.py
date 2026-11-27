@@ -56,7 +56,8 @@ def regen(s):
         return s
     sub = f' "{a.subdir}"' if a.subdir else ""
     if a.export:
-        sub = f' "{a.subdir or "."}" {a.export}'
+        # regen: name crate [subdir] [export]; emit: name crate [export]
+        sub = f' "{a.subdir or "."}" {a.export}' if a.mode == "regen" else f" {a.export}"
     line = f'{a.mode} {n:<12}"$REG/{a.crate}"{sub}\n' if a.mode == "emit" else f'regen {n:<12}"$REG/{a.crate}"{sub}\n'
     return s.replace('echo "regenerated;', line + 'echo "regenerated;', 1)
 

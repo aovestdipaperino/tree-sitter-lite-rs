@@ -15,7 +15,10 @@ REG=$(ls -d "${CARGO_HOME:-$HOME/.cargo}"/registry/src/*/ | head -1)
 W=${KEEP_WORK:-$(mktemp -d)}
 mkdir -p "$W"
 
+only() { [ -z "${ONLY:-}" ] || [[ " $ONLY " == *" $1 "* ]]; }   # ONLY="zig lua" tools/regen.sh regenerates just those
+
 emit() {  # name  dir-with-src/parser.c  [export-name suffix override]
+  only "$1" || return 0
   rm -f "$HERE/src/$1/parser.rs"
   local pc="$2/src/parser.c"
   [ -f "$pc" ] || pc="$2/grammar-src/parser.c"   # the legacy-basic crates ship it in grammar-src/
@@ -28,6 +31,7 @@ emit() {  # name  dir-with-src/parser.c  [export-name suffix override]
 }
 
 regen() {  # name  crate-dir  [subdir]  [export name]   (subdir holds src/grammar.json)
+  only "$1" || return 0
   local dir="$W/$1"
   cp -R "$2" "$dir"
   local sub="$dir/${3:-.}"
@@ -69,9 +73,16 @@ emit qbasic      "$REG/tree-sitter-qbasic-0.2.0"
 regen zig         "$REG/tree-sitter-zig-1.1.2"
 regen pascal      "$REG/tree-sitter-pascal-0.10.2"
 regen objc        "$REG/tree-sitter-objc-3.0.2"
-emit vbnet       "$REG/tree-sitter-vb-dotnet-0.1.0" "." vb_dotnet
+emit vbnet       "$REG/tree-sitter-vb-dotnet-0.1.0" vb_dotnet
 emit batch       "$REG/tree-sitter-batch-0.3.2"
 emit msbasic2    "$REG/tree-sitter-msbasic2-0.2.0"
 emit gwbasic     "$REG/tree-sitter-gwbasic-0.2.0"
 regen nix         "$REG/tree-sitter-nix-0.3.0"
+regen glsl        "$REG/tree-sitter-glsl-0.2.0"
+regen clojure     "$REG/tree-sitter-clojure-orchard-0.2.5" "." clojure_orchard
+regen toml        "$REG/tree-sitter-toml-ng-0.7.0"
+emit powershell  "$REG/tree-sitter-powershell-0.26.4"
+# Vendored grammars of the large crate (no registry crate): their sources are kept in tools/vendored/.
+emit quint       "$HERE/tools/vendored/tree-sitter-quint-5155d17" quint   # zdavison/tree-sitter-quint @ 5155d17
+regen dockerfile "$HERE/tools/vendored/tree-sitter-dockerfile-0.2.0"   # camdencheek/tree-sitter-dockerfile v0.2.0 (868e44c): src/grammar.json only
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"

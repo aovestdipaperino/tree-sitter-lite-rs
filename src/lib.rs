@@ -16,10 +16,16 @@ pub mod batch;
 pub mod c;
 #[cfg(feature = "lang-c_sharp")]
 pub mod c_sharp;
+#[cfg(feature = "lang-clojure")]
+pub mod clojure;
 #[cfg(feature = "lang-cpp")]
 pub mod cpp;
 #[cfg(feature = "lang-dart")]
 pub mod dart;
+#[cfg(feature = "lang-dockerfile")]
+pub mod dockerfile;
+#[cfg(feature = "lang-glsl")]
+pub mod glsl;
 #[cfg(feature = "lang-go")]
 pub mod go;
 #[cfg(feature = "lang-gwbasic")]
@@ -42,10 +48,14 @@ pub mod objc;
 pub mod pascal;
 #[cfg(feature = "lang-php")]
 pub mod php;
+#[cfg(feature = "lang-powershell")]
+pub mod powershell;
 #[cfg(feature = "lang-python")]
 pub mod python;
 #[cfg(feature = "lang-qbasic")]
 pub mod qbasic;
+#[cfg(feature = "lang-quint")]
+pub mod quint;
 #[cfg(feature = "lang-ruby")]
 pub mod ruby;
 #[cfg(feature = "lang-rust")]
@@ -54,6 +64,8 @@ pub mod rust;
 pub mod scala;
 #[cfg(feature = "lang-swift")]
 pub mod swift;
+#[cfg(feature = "lang-toml")]
+pub mod toml;
 #[cfg(feature = "lang-tsx")]
 pub mod tsx;
 #[cfg(feature = "lang-typescript")]
@@ -200,6 +212,36 @@ pub fn language_nix() -> LanguageFn {
     nix::LANGUAGE
 }
 
+#[cfg(feature = "lang-glsl")]
+pub fn language_glsl() -> LanguageFn {
+    glsl::LANGUAGE_GLSL
+}
+
+#[cfg(feature = "lang-clojure")]
+pub fn language_clojure() -> LanguageFn {
+    clojure::LANGUAGE
+}
+
+#[cfg(feature = "lang-toml")]
+pub fn language_toml() -> LanguageFn {
+    toml::LANGUAGE
+}
+
+#[cfg(feature = "lang-powershell")]
+pub fn language_powershell() -> LanguageFn {
+    powershell::LANGUAGE
+}
+
+#[cfg(feature = "lang-quint")]
+pub fn language_quint() -> LanguageFn {
+    quint::LANGUAGE
+}
+
+#[cfg(feature = "lang-dockerfile")]
+pub fn language_dockerfile() -> LanguageFn {
+    dockerfile::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -258,5 +300,17 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("gwbasic", language_gwbasic()));
     #[cfg(feature = "lang-nix")]
     langs.push(("nix", language_nix()));
+    #[cfg(feature = "lang-glsl")]
+    langs.push(("glsl", language_glsl()));
+    #[cfg(feature = "lang-clojure")]
+    langs.push(("clojure", language_clojure()));
+    #[cfg(feature = "lang-toml")]
+    langs.push(("toml", language_toml()));
+    #[cfg(feature = "lang-powershell")]
+    langs.push(("powershell", language_powershell()));
+    #[cfg(feature = "lang-quint")]
+    langs.push(("quint", language_quint()));
+    #[cfg(feature = "lang-dockerfile")]
+    langs.push(("dockerfile", language_dockerfile()));
     langs
 }

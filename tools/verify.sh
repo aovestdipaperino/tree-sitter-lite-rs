@@ -35,6 +35,11 @@ case "$G" in
   msbasic2)   CSRC="$REG/tree-sitter-msbasic2-0.2.0/grammar-src" ;;
   gwbasic)    CSRC="$REG/tree-sitter-gwbasic-0.2.0/grammar-src" ;;
   nix)        CSRC="$W/nix/src" ;;
+  glsl)       CSRC="$W/glsl/src" ;;
+  clojure)    CSRC="$W/clojure/src" ;;
+  toml)       CSRC="$W/toml/src" ;;
+  powershell) CSRC="$REG/tree-sitter-powershell-0.26.4/src" ;;
+  quint)      CSRC="$HERE/tools/vendored/tree-sitter-quint-5155d17/src" ;;
   *)          CSRC="$W/$G/src" ;;
 esac
 [ -f "$CSRC/parser.c" ] || { echo "no C source for $G at $CSRC" >&2; exit 1; }
