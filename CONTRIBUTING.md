@@ -23,9 +23,10 @@ registration lines. The steps, with `lua` as the worked example (the first mediu
    the C locale, so ASCII only.
 3. `src/<name>/mod.rs` with `LANGUAGE` and the data constants the upstream crate exports; the data
    files go under `data/<name>/`.
-4. Register it: `lang-<name>` in `Cargo.toml` (and in its tier), the `cfg`-gated `mod`,
-   `language_<name>()` and the `all_languages()` entry in `src/lib.rs`, and the case in
-   `tools/verify.sh`.
+4. Register it with `tools/register.py <name> --tier medium --const LANGUAGE --crate <crate-dir>
+   --mode emit|regen`: it adds `lang-<name>` to `Cargo.toml` (and its tier), the `cfg`-gated `mod`,
+   `language_<name>()` and the `all_languages()` entry in `src/lib.rs`, and the lines in
+   `tools/regen.sh` and `tools/verify.sh`. It is idempotent.
 5. Verify against the C with the c2rs harness (`PREGEN`, `RS_SCANNER`, `DIRECT=1`, `SOUP`, `FUZZ`,
    `PREFIX`, `INCR`, and `GOLDEN=<file>` to record `tests/golden/<name>.golden`). The result must
    be `RESULT: PASS` with 0 mismatches.
