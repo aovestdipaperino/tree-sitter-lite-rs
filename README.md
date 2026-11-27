@@ -101,6 +101,14 @@ Known quirk: haskell's `highlights.scm` has three patterns (lines 134, 153, 171)
 The grammars come from the released crate versions, not upstream HEAD: HEAD of tree-sitter-python
 already has grammar changes after 0.25.0.
 
+## Runtime versions
+
+The golden trees were recorded with tree-sitter 0.26. Under 0.27.2 the inputs that contain ERROR
+nodes recover differently (the runtime changed, not the grammars): the same 31 golden tests fail
+with the upstream C 0.27.2 runtime and with the Rust port of it
+([tree-sitter-runtime-rs](https://github.com/aovestdipaperino/tree-sitter-runtime-rs)), and everything
+else passes on both.
+
 ## What is and is not Rust
 
 The grammar side is pure Rust. The `tree-sitter` runtime that drives it (the incremental parse
