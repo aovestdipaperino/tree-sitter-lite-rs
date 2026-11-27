@@ -93,8 +93,11 @@ language on its own, so a feature never depends on another one by accident.
 | perl | tree-sitter-perl | ported |
 | fortran | tree-sitter-fortran | ported |
 | haskell | tree-sitter-haskell 0.23.1 (regenerated at ABI 15) | ported |
+| php_only | tree-sitter-php 0.24.2, the `php_only` grammar | shared with php |
+| ocaml_interface, ocaml_type | tree-sitter-ocaml 0.24.2 | shared with ocaml |
+| fsharp_signature | tree-sitter-fsharp 0.3.0 | shared with fsharp |
 
-The first eight are the `lite` tier; lua through php are `medium`; the rest are `full`. Not included yet: `php_only`, `ocaml_interface`, `ocaml_type` and `fsharp_signature`.
+The first eight are the `lite` tier; lua through php are `medium`; the rest are `full`. The last four (php_only, ocaml_interface, ocaml_type, fsharp_signature) reuse the scanner of their sibling grammar, so each enables its sibling's feature; their bundled queries are the upstream ones for the full grammar, so some name nodes the sub-grammar lacks.
 
 Known quirk: haskell's `highlights.scm` has three patterns (lines 134, 153, 171) that the ABI 15 regeneration rejects; injections and locals compile.
 
