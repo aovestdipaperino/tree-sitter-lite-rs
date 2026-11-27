@@ -18,6 +18,8 @@ pub mod c;
 pub mod c_sharp;
 #[cfg(feature = "lang-clojure")]
 pub mod clojure;
+#[cfg(feature = "lang-cobol")]
+pub mod cobol;
 #[cfg(feature = "lang-cpp")]
 pub mod cpp;
 #[cfg(feature = "lang-dart")]
@@ -270,6 +272,11 @@ pub fn language_sql() -> LanguageFn {
     sql::LANGUAGE
 }
 
+#[cfg(feature = "lang-cobol")]
+pub fn language_cobol() -> LanguageFn {
+    cobol::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -348,5 +355,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("erlang", language_erlang()));
     #[cfg(feature = "lang-sql")]
     langs.push(("sql", language_sql()));
+    #[cfg(feature = "lang-cobol")]
+    langs.push(("cobol", language_cobol()));
     langs
 }
