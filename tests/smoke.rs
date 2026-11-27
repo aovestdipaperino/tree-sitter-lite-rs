@@ -1,5 +1,6 @@
+#![cfg(feature = "lite")]
 use tree_sitter::Parser;
-use tree_sitter_lite_rs as g;
+use tree_sitter_grammars_rs as g;
 
 fn check(lang: tree_sitter_language::LanguageFn, src: &str, expect_kind: &str) {
     let mut p = Parser::new();

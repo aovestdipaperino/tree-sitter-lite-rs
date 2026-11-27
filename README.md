@@ -1,10 +1,10 @@
-# tree-sitter-lite-rs
+# tree-sitter-grammars-rs
 
-[![CI](https://github.com/aovestdipaperino/tree-sitter-lite-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/aovestdipaperino/tree-sitter-lite-rs/actions/workflows/ci.yml)
+[![CI](https://github.com/aovestdipaperino/tree-sitter-grammars-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/aovestdipaperino/tree-sitter-grammars-rs/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Rust](https://img.shields.io/badge/rust-2024-orange.svg)](https://www.rust-lang.org)
 
-Pure-Rust tree-sitter grammars for **javascript, typescript, tsx, python, rust, go, java and c**.
+Pure-Rust tree-sitter grammars, selected with cargo features. The `lite` tier (the default) is **javascript, typescript, tsx, python, rust, go, java and c**; `medium` and `full` are being moved over from the C-based grammar crates, one language at a time.
 No C sources, no `build.rs`, no C compiler needed to build the grammars.
 
 The parse tables and lexers are transpiled from the released tree-sitter parsers by
@@ -15,12 +15,12 @@ usual `tree_sitter_<name>()` symbols.
 ```toml
 [dependencies]
 tree-sitter = "0.26"
-tree-sitter-lite-rs = { git = "https://github.com/aovestdipaperino/tree-sitter-lite-rs" }
+tree-sitter-grammars-rs = { git = "https://github.com/aovestdipaperino/tree-sitter-grammars-rs" }
 ```
 
 ```rust
 let mut parser = tree_sitter::Parser::new();
-parser.set_language(&tree_sitter_lite_rs::python::LANGUAGE.into())?;
+parser.set_language(&tree_sitter_grammars_rs::python::LANGUAGE.into())?;
 let tree = parser.parse("def f():\n    return 1\n", None).unwrap();
 println!("{}", tree.root_node().to_sexp());
 ```
@@ -31,6 +31,18 @@ Each grammar module exposes the same constants the upstream crate does, under th
 (`HIGHLIGHTS_QUERY` or `HIGHLIGHT_QUERY`, `TAGS_QUERY`, `LOCALS_QUERY`, `INJECTIONS_QUERY`,
 `JSX_HIGHLIGHT_QUERY`). The data files come from the same released crates and are bundled under
 `data/`; `tests/data.rs` compiles every query against its grammar.
+
+## Tiers and features
+
+Every language has its own feature, `lang-<name>`, and three tiers bundle them: `lite` (default),
+`medium` (includes `lite`) and `full` (includes `medium`). Take a tier, or only what you need:
+
+```toml
+tree-sitter-grammars-rs = { version = "0.1", default-features = false, features = ["lang-python", "lang-rust"] }
+```
+
+`all_languages()` returns the enabled languages as `(name, LanguageFn)` pairs. CI builds each
+language on its own, so a feature never depends on another one by accident.
 
 ## Grammars
 
@@ -90,7 +102,7 @@ port stops one write earlier instead.
 
 ## Star history
 
-[![Star History Chart](https://api.star-history.com/svg?repos=aovestdipaperino/tree-sitter-lite-rs&type=Date)](https://star-history.com/#aovestdipaperino/tree-sitter-lite-rs&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=aovestdipaperino/tree-sitter-grammars-rs&type=Date)](https://star-history.com/#aovestdipaperino/tree-sitter-grammars-rs&Date)
 
 ## License
 

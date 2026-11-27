@@ -1,8 +1,9 @@
 //! Golden tests: syntax trees recorded from the original C parsers (tree-sitter 0.26,
 //! upstream grammars regenerated at ABI 15). Each line is `<hex input>\t<s-expression>`.
 //! Inputs: grammar corpus + examples, real-world files, and random token soup.
+#![cfg(feature = "lite")]
 use tree_sitter::Parser;
-use tree_sitter_lite_rs as g;
+use tree_sitter_grammars_rs as g;
 
 fn unhex(h: &str) -> String {
     let bytes: Vec<u8> = (0..h.len() / 2)

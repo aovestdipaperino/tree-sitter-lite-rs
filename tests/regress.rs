@@ -1,6 +1,7 @@
 //! Targeted regressions and behaviours that exercise each ported scanner and the transpiled lexers.
+#![cfg(feature = "lite")]
 use tree_sitter::{InputEdit, Parser, Point};
-use tree_sitter_lite_rs as g;
+use tree_sitter_grammars_rs as g;
 
 fn sexp(lang: tree_sitter_language::LanguageFn, src: &str) -> String {
     let mut p = Parser::new();

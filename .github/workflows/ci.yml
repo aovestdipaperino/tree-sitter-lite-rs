@@ -23,3 +23,8 @@ jobs:
       - run: cargo fmt --all -- --check
       - run: cargo clippy --all-targets -- -D warnings
       - run: cargo test --release
+      - name: Each language builds on its own
+        run: |
+          for f in $(sed -n 's/^\(lang-[a-z0-9-]*\) = \[\]$/\1/p' Cargo.toml); do
+            cargo build --release --no-default-features --features "$f"
+          done

@@ -1,40 +1,91 @@
-//! Pure-Rust tree-sitter grammars (lite tier): no C sources, no `build.rs`.
+//! Pure-Rust tree-sitter grammars: no C sources, no `build.rs`.
+//!
 //! Parse tables and lexers are transpiled from the upstream generated `parser.c` by `c2rs`;
 //! external scanners are hand-ported. Each grammar exports the usual `tree_sitter_<name>` symbol.
+//!
+//! Grammars are selected with cargo features: one `lang-<name>` per language, and three tiers that
+//! bundle them (`lite`, the default; `medium`, which includes `lite`; and `full`, which includes
+//! `medium`). [`all_languages`] lists whatever is enabled.
 #![allow(clippy::all)]
 pub mod abi;
+#[cfg(feature = "lang-c")]
 pub mod c;
+#[cfg(feature = "lang-go")]
 pub mod go;
+#[cfg(feature = "lang-java")]
 pub mod java;
+#[cfg(feature = "lang-javascript")]
 pub mod javascript;
+#[cfg(feature = "lang-python")]
 pub mod python;
+#[cfg(feature = "lang-rust")]
 pub mod rust;
+#[cfg(feature = "lang-tsx")]
 pub mod tsx;
+#[cfg(feature = "lang-typescript")]
 pub mod typescript;
 
 use tree_sitter_language::LanguageFn;
 
+#[cfg(feature = "lang-c")]
 pub fn language_c() -> LanguageFn {
     c::LANGUAGE
 }
+
+#[cfg(feature = "lang-go")]
 pub fn language_go() -> LanguageFn {
     go::LANGUAGE
 }
+
+#[cfg(feature = "lang-java")]
 pub fn language_java() -> LanguageFn {
     java::LANGUAGE
 }
+
+#[cfg(feature = "lang-javascript")]
 pub fn language_javascript() -> LanguageFn {
     javascript::LANGUAGE
 }
+
+#[cfg(feature = "lang-python")]
 pub fn language_python() -> LanguageFn {
     python::LANGUAGE
 }
+
+#[cfg(feature = "lang-rust")]
 pub fn language_rust() -> LanguageFn {
     rust::LANGUAGE
 }
+
+#[cfg(feature = "lang-tsx")]
 pub fn language_tsx() -> LanguageFn {
     tsx::LANGUAGE
 }
+
+#[cfg(feature = "lang-typescript")]
 pub fn language_typescript() -> LanguageFn {
     typescript::LANGUAGE_TYPESCRIPT
+}
+
+/// The enabled languages as `(name, language)` pairs.
+pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
+    #[allow(unused_mut)]
+    let mut langs = Vec::new();
+    #[cfg(feature = "lang-c")]
+    langs.push(("c", language_c()));
+    #[cfg(feature = "lang-go")]
+    langs.push(("go", language_go()));
+    #[cfg(feature = "lang-java")]
+    langs.push(("java", language_java()));
+    #[cfg(feature = "lang-javascript")]
+    langs.push(("javascript", language_javascript()));
+    #[cfg(feature = "lang-python")]
+    langs.push(("python", language_python()));
+    #[cfg(feature = "lang-rust")]
+    langs.push(("rust", language_rust()));
+    #[cfg(feature = "lang-tsx")]
+    langs.push(("tsx", language_tsx()));
+    #[cfg(feature = "lang-typescript")]
+    langs.push(("typescript", language_typescript()));
+    langs
 }

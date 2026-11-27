@@ -1,7 +1,8 @@
 //! The bundled upstream data: `NODE_TYPES` must be JSON describing the grammar, and every query
 //! constant must compile against its grammar (which also exercises the runtime's query engine).
+#![cfg(feature = "lite")]
 use tree_sitter::{Language, Query, StreamingIterator};
-use tree_sitter_lite_rs as g;
+use tree_sitter_grammars_rs as g;
 
 fn node_types_ok(name: &str, json: &str, lang: &Language) {
     let v: serde_like::Count = serde_like::count_types(json);

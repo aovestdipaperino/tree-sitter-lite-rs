@@ -1,14 +1,31 @@
 [package]
-name = "tree-sitter-lite-rs"
+name = "tree-sitter-grammars-rs"
 version = "0.1.0"
 authors = ["Enzo Lombardi <enzinol@gmail.com>"]
 edition = "2024"
-description = "Pure-Rust tree-sitter grammars for tokensave's lite tier (no C, no build.rs)"
+description = "Pure-Rust tree-sitter grammars in three feature-selected tiers (lite, medium, full): no C, no build.rs"
 license = "MIT"
 readme = "README.md"
 keywords = ["tree-sitter", "parser", "grammar", "javascript", "python"]
 categories = ["parsing", "development-tools"]
-repository = "https://github.com/aovestdipaperino/tree-sitter-lite-rs"
+repository = "https://github.com/aovestdipaperino/tree-sitter-grammars-rs"
+
+[features]
+default = ["lite"]
+# Tiers. Each one includes the one below it; pick single languages with the `lang-*` features.
+lite = ["lang-c", "lang-go", "lang-java", "lang-javascript", "lang-python", "lang-rust", "lang-tsx", "lang-typescript"]
+medium = ["lite"]
+full = ["medium"]
+
+# Languages (one feature each).
+lang-c = []
+lang-go = []
+lang-java = []
+lang-javascript = []
+lang-python = []
+lang-rust = []
+lang-tsx = []
+lang-typescript = []
 
 [dependencies]
 tree-sitter-language = "0.1"
