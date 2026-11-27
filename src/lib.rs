@@ -50,6 +50,8 @@ pub mod kotlin;
 pub mod lean;
 #[cfg(feature = "lang-lua")]
 pub mod lua;
+#[cfg(feature = "lang-markdown_inline")]
+pub mod markdown_inline;
 #[cfg(feature = "lang-msbasic2")]
 pub mod msbasic2;
 #[cfg(feature = "lang-nix")]
@@ -72,6 +74,8 @@ pub mod python;
 pub mod qbasic;
 #[cfg(feature = "lang-quint")]
 pub mod quint;
+#[cfg(feature = "lang-r")]
+pub mod r;
 #[cfg(feature = "lang-ruby")]
 pub mod ruby;
 #[cfg(feature = "lang-rust")]
@@ -305,6 +309,16 @@ pub fn language_elixir() -> LanguageFn {
     elixir::LANGUAGE
 }
 
+#[cfg(feature = "lang-markdown_inline")]
+pub fn language_markdown_inline() -> LanguageFn {
+    markdown_inline::LANGUAGE
+}
+
+#[cfg(feature = "lang-r")]
+pub fn language_r() -> LanguageFn {
+    r::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -393,5 +407,9 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("julia", language_julia()));
     #[cfg(feature = "lang-elixir")]
     langs.push(("elixir", language_elixir()));
+    #[cfg(feature = "lang-markdown_inline")]
+    langs.push(("markdown_inline", language_markdown_inline()));
+    #[cfg(feature = "lang-r")]
+    langs.push(("r", language_r()));
     langs
 }

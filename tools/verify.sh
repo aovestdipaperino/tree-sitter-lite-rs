@@ -47,6 +47,8 @@ case "$G" in
   lean)       CSRC="$W/lean/grammar/src" ;;
   julia)      CSRC="$W/julia/src" ;;
   elixir)     CSRC="$W/elixir/src" ;;
+  r)          CSRC="$W/r/src" ;;
+  markdown_inline) CSRC="$HERE/tools/vendored/tree-sitter-markdown-inline-0.5.3/src" ;;
   *)          CSRC="$W/$G/src" ;;
 esac
 [ -f "$CSRC/parser.c" ] || { echo "no C source for $G at $CSRC" >&2; exit 1; }

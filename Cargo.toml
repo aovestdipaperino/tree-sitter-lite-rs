@@ -15,7 +15,7 @@ default = ["lite"]
 # Tiers. Each one includes the one below it; pick single languages with the `lang-*` features.
 lite = ["lang-c", "lang-go", "lang-java", "lang-javascript", "lang-python", "lang-rust", "lang-tsx", "lang-typescript"]
 medium = ["lite", "lang-lua", "lang-dart", "lang-cpp", "lang-scala", "lang-kotlin", "lang-ruby", "lang-c_sharp", "lang-bash", "lang-php", "lang-swift"]
-full = ["medium", "lang-qbasic", "lang-zig", "lang-pascal", "lang-objc", "lang-vbnet", "lang-batch", "lang-msbasic2", "lang-gwbasic", "lang-nix", "lang-glsl", "lang-clojure", "lang-toml", "lang-powershell", "lang-quint", "lang-dockerfile", "lang-protobuf", "lang-ocaml", "lang-erlang", "lang-sql", "lang-cobol", "lang-fsharp", "lang-lean", "lang-julia", "lang-elixir"]
+full = ["medium", "lang-qbasic", "lang-zig", "lang-pascal", "lang-objc", "lang-vbnet", "lang-batch", "lang-msbasic2", "lang-gwbasic", "lang-nix", "lang-glsl", "lang-clojure", "lang-toml", "lang-powershell", "lang-quint", "lang-dockerfile", "lang-protobuf", "lang-ocaml", "lang-erlang", "lang-sql", "lang-cobol", "lang-fsharp", "lang-lean", "lang-julia", "lang-elixir", "lang-markdown_inline", "lang-r"]
 
 # Languages (one feature each).
 lang-c = []
@@ -60,6 +60,8 @@ lang-fsharp = []
 lang-lean = []
 lang-julia = []
 lang-elixir = []
+lang-markdown_inline = []
+lang-r = []
 
 [dependencies]
 tree-sitter-language = "0.1"
