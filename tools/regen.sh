@@ -88,4 +88,5 @@ regen dockerfile "$HERE/tools/vendored/tree-sitter-dockerfile-0.2.0"   # camdenc
 regen protobuf    "$HERE/tools/vendored/tree-sitter-protobuf-0.0.1"   # yusdacra/tree-sitter-protobuf @ 7f873da: src/grammar.json only
 regen ocaml       "$REG/tree-sitter-ocaml-0.24.2" "grammars/ocaml"
 regen erlang      "$REG/tree-sitter-erlang-0.16.0"
+regen sql         "$REG/tree-sitter-sequel-0.3.11"
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"

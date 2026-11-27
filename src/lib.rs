@@ -68,6 +68,8 @@ pub mod ruby;
 pub mod rust;
 #[cfg(feature = "lang-scala")]
 pub mod scala;
+#[cfg(feature = "lang-sql")]
+pub mod sql;
 #[cfg(feature = "lang-swift")]
 pub mod swift;
 #[cfg(feature = "lang-toml")]
@@ -263,6 +265,11 @@ pub fn language_erlang() -> LanguageFn {
     erlang::LANGUAGE
 }
 
+#[cfg(feature = "lang-sql")]
+pub fn language_sql() -> LanguageFn {
+    sql::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -339,5 +346,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("ocaml", language_ocaml()));
     #[cfg(feature = "lang-erlang")]
     langs.push(("erlang", language_erlang()));
+    #[cfg(feature = "lang-sql")]
+    langs.push(("sql", language_sql()));
     langs
 }
