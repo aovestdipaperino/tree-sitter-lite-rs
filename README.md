@@ -32,6 +32,8 @@ Each grammar module exposes the same constants the upstream crate does, under th
 `JSX_HIGHLIGHT_QUERY`). The data files come from the same released crates and are bundled under
 `data/`; `tests/data.rs` compiles every query against its grammar.
 
+Want another language? See [docs/ADDING_A_LANGUAGE.md](docs/ADDING_A_LANGUAGE.md).
+
 ## Tiers and features
 
 Every language has its own feature, `lang-<name>`, and three tiers bundle them: `lite` (default),

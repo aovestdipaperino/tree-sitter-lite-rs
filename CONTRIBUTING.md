@@ -12,6 +12,9 @@ Issues and pull requests are welcome.
 
 ## Adding a language to a tier
 
+The full guide, with the decision tree for what sources you have and the scanner rules, is
+[docs/ADDING_A_LANGUAGE.md](docs/ADDING_A_LANGUAGE.md). The checklist:
+
 One language is one self-contained change; nothing outside its own files is shared except the
 registration lines. The steps, with `lua` as the worked example (the first medium-tier grammar):
 
