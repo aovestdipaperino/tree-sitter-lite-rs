@@ -40,6 +40,8 @@ pub mod glsl;
 pub mod go;
 #[cfg(feature = "lang-gwbasic")]
 pub mod gwbasic;
+#[cfg(feature = "lang-haskell")]
+pub mod haskell;
 #[cfg(feature = "lang-java")]
 pub mod java;
 #[cfg(feature = "lang-javascript")]
@@ -340,6 +342,11 @@ pub fn language_markdown() -> LanguageFn {
     markdown::LANGUAGE
 }
 
+#[cfg(feature = "lang-haskell")]
+pub fn language_haskell() -> LanguageFn {
+    haskell::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -438,5 +445,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("fortran", language_fortran()));
     #[cfg(feature = "lang-markdown")]
     langs.push(("markdown", language_markdown()));
+    #[cfg(feature = "lang-haskell")]
+    langs.push(("haskell", language_haskell()));
     langs
 }
