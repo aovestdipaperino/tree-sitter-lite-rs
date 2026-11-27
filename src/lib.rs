@@ -28,6 +28,8 @@ pub mod dart;
 pub mod dockerfile;
 #[cfg(feature = "lang-erlang")]
 pub mod erlang;
+#[cfg(feature = "lang-fsharp")]
+pub mod fsharp;
 #[cfg(feature = "lang-glsl")]
 pub mod glsl;
 #[cfg(feature = "lang-go")]
@@ -277,6 +279,11 @@ pub fn language_cobol() -> LanguageFn {
     cobol::LANGUAGE
 }
 
+#[cfg(feature = "lang-fsharp")]
+pub fn language_fsharp() -> LanguageFn {
+    fsharp::LANGUAGE_FSHARP
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -357,5 +364,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("sql", language_sql()));
     #[cfg(feature = "lang-cobol")]
     langs.push(("cobol", language_cobol()));
+    #[cfg(feature = "lang-fsharp")]
+    langs.push(("fsharp", language_fsharp()));
     langs
 }

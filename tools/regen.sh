@@ -90,4 +90,5 @@ regen ocaml       "$REG/tree-sitter-ocaml-0.24.2" "grammars/ocaml"
 regen erlang      "$REG/tree-sitter-erlang-0.16.0"
 regen sql         "$REG/tree-sitter-sequel-0.3.11"
 regen cobol       "$HERE/tools/vendored/tree-sitter-cobol-0.0.1" "." COBOL   # yutaro-sakamoto/tree-sitter-cobol @ 550020d: src/grammar.json only
+regen fsharp      "$REG/tree-sitter-fsharp-0.3.0" "fsharp"
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"
