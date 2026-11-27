@@ -35,7 +35,12 @@ regen() {  # name  crate-dir  [subdir]  [export name]   (subdir holds src/gramma
     printf '{"grammars":[{"name":"%s","scope":"source.%s","path":"."}],"metadata":{"version":"%s"}}\n' "$1" "$1" "${2##*-}" > "$dir/tree-sitter.json"
   fi
   # src/grammar.json is the resolved grammar: no node dependencies needed.
+  # Keep the crate's own array.h: the 0.26.x generator writes one whose `array_delete` evaluates its
+  # argument several times, which crashes the C reference of scanners that call
+  # `array_delete(&array_pop(...))` (php).
+  [ -f "$sub/src/tree_sitter/array.h" ] && cp "$sub/src/tree_sitter/array.h" "$W/$1.array.h"
   (cd "$sub" && tree-sitter generate --abi 15 src/grammar.json)
+  [ -f "$W/$1.array.h" ] && cp "$W/$1.array.h" "$sub/src/tree_sitter/array.h"
   grep -q "define LANGUAGE_VERSION 15" "$sub/src/parser.c" || { echo "$1: generator did not produce ABI 15" >&2; exit 1; }
   emit "$1" "$sub" "${4:-$1}"
 }
@@ -54,4 +59,7 @@ regen cpp         "$REG/tree-sitter-cpp-0.23.4"
 emit scala       "$REG/tree-sitter-scala-0.25.1"
 regen kotlin      "$REG/tree-sitter-kotlin-sg-0.4.1"
 regen ruby        "$REG/tree-sitter-ruby-0.23.1"
+emit c_sharp     "$REG/tree-sitter-c-sharp-0.23.5"
+emit bash        "$REG/tree-sitter-bash-0.25.1"
+regen php         "$REG/tree-sitter-php-0.24.2" "php"
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"

@@ -8,8 +8,12 @@
 //! `medium`). [`all_languages`] lists whatever is enabled.
 #![allow(clippy::all)]
 pub mod abi;
+#[cfg(feature = "lang-bash")]
+pub mod bash;
 #[cfg(feature = "lang-c")]
 pub mod c;
+#[cfg(feature = "lang-c_sharp")]
+pub mod c_sharp;
 #[cfg(feature = "lang-cpp")]
 pub mod cpp;
 #[cfg(feature = "lang-dart")]
@@ -24,6 +28,8 @@ pub mod javascript;
 pub mod kotlin;
 #[cfg(feature = "lang-lua")]
 pub mod lua;
+#[cfg(feature = "lang-php")]
+pub mod php;
 #[cfg(feature = "lang-python")]
 pub mod python;
 #[cfg(feature = "lang-ruby")]
@@ -109,6 +115,21 @@ pub fn language_ruby() -> LanguageFn {
     ruby::LANGUAGE
 }
 
+#[cfg(feature = "lang-c_sharp")]
+pub fn language_c_sharp() -> LanguageFn {
+    c_sharp::LANGUAGE
+}
+
+#[cfg(feature = "lang-bash")]
+pub fn language_bash() -> LanguageFn {
+    bash::LANGUAGE
+}
+
+#[cfg(feature = "lang-php")]
+pub fn language_php() -> LanguageFn {
+    php::LANGUAGE_PHP
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -141,5 +162,11 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("kotlin", language_kotlin()));
     #[cfg(feature = "lang-ruby")]
     langs.push(("ruby", language_ruby()));
+    #[cfg(feature = "lang-c_sharp")]
+    langs.push(("c_sharp", language_c_sharp()));
+    #[cfg(feature = "lang-bash")]
+    langs.push(("bash", language_bash()));
+    #[cfg(feature = "lang-php")]
+    langs.push(("php", language_php()));
     langs
 }
