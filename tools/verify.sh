@@ -25,6 +25,7 @@ case "$G" in
   c_sharp)    CSRC="$REG/tree-sitter-c-sharp-0.23.5/src" ;;
   bash)       CSRC="$REG/tree-sitter-bash-0.25.1/src" ;;
   php)        CSRC="$W/php/php/src";               export C_INC="$W/php/common" ;;
+  swift)      CSRC="$REG/tree-sitter-swift-0.7.4/src" ;;
   *)          CSRC="$W/$G/src" ;;
 esac
 [ -f "$CSRC/parser.c" ] || { echo "no C source for $G at $CSRC" >&2; exit 1; }

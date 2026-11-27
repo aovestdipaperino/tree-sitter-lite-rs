@@ -38,6 +38,8 @@ pub mod ruby;
 pub mod rust;
 #[cfg(feature = "lang-scala")]
 pub mod scala;
+#[cfg(feature = "lang-swift")]
+pub mod swift;
 #[cfg(feature = "lang-tsx")]
 pub mod tsx;
 #[cfg(feature = "lang-typescript")]
@@ -130,6 +132,11 @@ pub fn language_php() -> LanguageFn {
     php::LANGUAGE_PHP
 }
 
+#[cfg(feature = "lang-swift")]
+pub fn language_swift() -> LanguageFn {
+    swift::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -168,5 +175,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("bash", language_bash()));
     #[cfg(feature = "lang-php")]
     langs.push(("php", language_php()));
+    #[cfg(feature = "lang-swift")]
+    langs.push(("swift", language_swift()));
     langs
 }
