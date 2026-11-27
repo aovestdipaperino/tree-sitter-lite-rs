@@ -16,6 +16,8 @@ pub mod go;
 pub mod java;
 #[cfg(feature = "lang-javascript")]
 pub mod javascript;
+#[cfg(feature = "lang-lua")]
+pub mod lua;
 #[cfg(feature = "lang-python")]
 pub mod python;
 #[cfg(feature = "lang-rust")]
@@ -45,6 +47,11 @@ pub fn language_java() -> LanguageFn {
 #[cfg(feature = "lang-javascript")]
 pub fn language_javascript() -> LanguageFn {
     javascript::LANGUAGE
+}
+
+#[cfg(feature = "lang-lua")]
+pub fn language_lua() -> LanguageFn {
+    lua::LANGUAGE
 }
 
 #[cfg(feature = "lang-python")]
@@ -79,6 +86,8 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("java", language_java()));
     #[cfg(feature = "lang-javascript")]
     langs.push(("javascript", language_javascript()));
+    #[cfg(feature = "lang-lua")]
+    langs.push(("lua", language_lua()));
     #[cfg(feature = "lang-python")]
     langs.push(("python", language_python()));
     #[cfg(feature = "lang-rust")]

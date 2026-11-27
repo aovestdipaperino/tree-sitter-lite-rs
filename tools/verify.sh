@@ -14,6 +14,7 @@ case "$G" in
   python)     CSRC="$REG/tree-sitter-python-0.25.0/src" ;;
   typescript) CSRC="$W/typescript/typescript/src"; export C_INC="$W/typescript/common" ;;
   tsx)        CSRC="$W/tsx/tsx/src";               export C_INC="$W/tsx/common" ;;
+  lua)        CSRC="$REG/tree-sitter-lua-0.5.0/src" ;;
   *)          CSRC="$W/$G/src" ;;
 esac
 [ -f "$CSRC/parser.c" ] || { echo "no C source for $G at $CSRC" >&2; exit 1; }

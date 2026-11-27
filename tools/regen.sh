@@ -48,4 +48,5 @@ regen java       "$REG/tree-sitter-java-0.23.5"
 regen typescript "$REG/tree-sitter-typescript-0.23.2" typescript
 regen tsx        "$REG/tree-sitter-typescript-0.23.2" tsx
 emit python      "$REG/tree-sitter-python-0.25.0"
+emit lua         "$REG/tree-sitter-lua-0.5.0"
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"
