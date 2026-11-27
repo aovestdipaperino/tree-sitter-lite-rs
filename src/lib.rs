@@ -30,6 +30,8 @@ pub mod dockerfile;
 pub mod elixir;
 #[cfg(feature = "lang-erlang")]
 pub mod erlang;
+#[cfg(feature = "lang-fortran")]
+pub mod fortran;
 #[cfg(feature = "lang-fsharp")]
 pub mod fsharp;
 #[cfg(feature = "lang-glsl")]
@@ -50,6 +52,8 @@ pub mod kotlin;
 pub mod lean;
 #[cfg(feature = "lang-lua")]
 pub mod lua;
+#[cfg(feature = "lang-markdown")]
+pub mod markdown;
 #[cfg(feature = "lang-markdown_inline")]
 pub mod markdown_inline;
 #[cfg(feature = "lang-msbasic2")]
@@ -62,6 +66,8 @@ pub mod objc;
 pub mod ocaml;
 #[cfg(feature = "lang-pascal")]
 pub mod pascal;
+#[cfg(feature = "lang-perl")]
+pub mod perl;
 #[cfg(feature = "lang-php")]
 pub mod php;
 #[cfg(feature = "lang-powershell")]
@@ -319,6 +325,21 @@ pub fn language_r() -> LanguageFn {
     r::LANGUAGE
 }
 
+#[cfg(feature = "lang-perl")]
+pub fn language_perl() -> LanguageFn {
+    perl::LANGUAGE
+}
+
+#[cfg(feature = "lang-fortran")]
+pub fn language_fortran() -> LanguageFn {
+    fortran::LANGUAGE
+}
+
+#[cfg(feature = "lang-markdown")]
+pub fn language_markdown() -> LanguageFn {
+    markdown::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -411,5 +432,11 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("markdown_inline", language_markdown_inline()));
     #[cfg(feature = "lang-r")]
     langs.push(("r", language_r()));
+    #[cfg(feature = "lang-perl")]
+    langs.push(("perl", language_perl()));
+    #[cfg(feature = "lang-fortran")]
+    langs.push(("fortran", language_fortran()));
+    #[cfg(feature = "lang-markdown")]
+    langs.push(("markdown", language_markdown()));
     langs
 }

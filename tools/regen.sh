@@ -98,4 +98,7 @@ regen julia       "$REG/tree-sitter-julia-0.23.1"
 regen elixir      "$REG/tree-sitter-elixir-0.3.5"
 regen r           "$REG/tree-sitter-r-1.3.0"
 emit markdown_inline "$HERE/tools/vendored/tree-sitter-markdown-inline-0.5.3"   # tree-sitter-grammars/tree-sitter-markdown v0.5.3 (f969cd3), tree-sitter-markdown-inline/src as shipped (ABI 15)
+emit perl        "$REG/tree-sitter-perl-1.1.2"
+regen fortran     "$REG/tree-sitter-fortran-0.5.1"
+emit markdown    "$HERE/tools/vendored/tree-sitter-markdown-0.5.3"   # tree-sitter-grammars/tree-sitter-markdown v0.5.3 (f969cd3): tree-sitter-markdown/src, the block grammar
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"
