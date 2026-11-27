@@ -27,6 +27,13 @@ case "$G" in
   php)        CSRC="$W/php/php/src";               export C_INC="$W/php/common" ;;
   swift)      CSRC="$REG/tree-sitter-swift-0.7.4/src" ;;
   qbasic)     CSRC="$REG/tree-sitter-qbasic-0.2.0/grammar-src" ;;
+  zig)        CSRC="$W/zig/src" ;;
+  pascal)     CSRC="$W/pascal/src" ;;
+  objc)       CSRC="$W/objc/src" ;;
+  vbnet)      CSRC="$REG/tree-sitter-vb-dotnet-0.1.0/src" ;;
+  batch)      CSRC="$REG/tree-sitter-batch-0.3.2/src" ;;
+  msbasic2)   CSRC="$REG/tree-sitter-msbasic2-0.2.0/grammar-src" ;;
+  gwbasic)    CSRC="$REG/tree-sitter-gwbasic-0.2.0/grammar-src" ;;
   *)          CSRC="$W/$G/src" ;;
 esac
 [ -f "$CSRC/parser.c" ] || { echo "no C source for $G at $CSRC" >&2; exit 1; }

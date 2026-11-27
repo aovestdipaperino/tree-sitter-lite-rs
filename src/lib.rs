@@ -10,6 +10,8 @@
 pub mod abi;
 #[cfg(feature = "lang-bash")]
 pub mod bash;
+#[cfg(feature = "lang-batch")]
+pub mod batch;
 #[cfg(feature = "lang-c")]
 pub mod c;
 #[cfg(feature = "lang-c_sharp")]
@@ -20,6 +22,8 @@ pub mod cpp;
 pub mod dart;
 #[cfg(feature = "lang-go")]
 pub mod go;
+#[cfg(feature = "lang-gwbasic")]
+pub mod gwbasic;
 #[cfg(feature = "lang-java")]
 pub mod java;
 #[cfg(feature = "lang-javascript")]
@@ -28,6 +32,12 @@ pub mod javascript;
 pub mod kotlin;
 #[cfg(feature = "lang-lua")]
 pub mod lua;
+#[cfg(feature = "lang-msbasic2")]
+pub mod msbasic2;
+#[cfg(feature = "lang-objc")]
+pub mod objc;
+#[cfg(feature = "lang-pascal")]
+pub mod pascal;
 #[cfg(feature = "lang-php")]
 pub mod php;
 #[cfg(feature = "lang-python")]
@@ -46,6 +56,10 @@ pub mod swift;
 pub mod tsx;
 #[cfg(feature = "lang-typescript")]
 pub mod typescript;
+#[cfg(feature = "lang-vbnet")]
+pub mod vbnet;
+#[cfg(feature = "lang-zig")]
+pub mod zig;
 
 use tree_sitter_language::LanguageFn;
 
@@ -144,6 +158,41 @@ pub fn language_qbasic() -> LanguageFn {
     qbasic::LANGUAGE
 }
 
+#[cfg(feature = "lang-zig")]
+pub fn language_zig() -> LanguageFn {
+    zig::LANGUAGE
+}
+
+#[cfg(feature = "lang-pascal")]
+pub fn language_pascal() -> LanguageFn {
+    pascal::LANGUAGE
+}
+
+#[cfg(feature = "lang-objc")]
+pub fn language_objc() -> LanguageFn {
+    objc::LANGUAGE
+}
+
+#[cfg(feature = "lang-vbnet")]
+pub fn language_vbnet() -> LanguageFn {
+    vbnet::LANGUAGE
+}
+
+#[cfg(feature = "lang-batch")]
+pub fn language_batch() -> LanguageFn {
+    batch::LANGUAGE
+}
+
+#[cfg(feature = "lang-msbasic2")]
+pub fn language_msbasic2() -> LanguageFn {
+    msbasic2::LANGUAGE
+}
+
+#[cfg(feature = "lang-gwbasic")]
+pub fn language_gwbasic() -> LanguageFn {
+    gwbasic::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -186,5 +235,19 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("swift", language_swift()));
     #[cfg(feature = "lang-qbasic")]
     langs.push(("qbasic", language_qbasic()));
+    #[cfg(feature = "lang-zig")]
+    langs.push(("zig", language_zig()));
+    #[cfg(feature = "lang-pascal")]
+    langs.push(("pascal", language_pascal()));
+    #[cfg(feature = "lang-objc")]
+    langs.push(("objc", language_objc()));
+    #[cfg(feature = "lang-vbnet")]
+    langs.push(("vbnet", language_vbnet()));
+    #[cfg(feature = "lang-batch")]
+    langs.push(("batch", language_batch()));
+    #[cfg(feature = "lang-msbasic2")]
+    langs.push(("msbasic2", language_msbasic2()));
+    #[cfg(feature = "lang-gwbasic")]
+    langs.push(("gwbasic", language_gwbasic()));
     langs
 }
