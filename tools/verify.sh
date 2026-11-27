@@ -18,6 +18,7 @@ case "$G" in
   tsx)        CSRC="$W/tsx/tsx/src";               export C_INC="$W/tsx/common" ;;
   dart)       CSRC="$W/dart/src" ;;
   lua)        CSRC="$REG/tree-sitter-lua-0.5.0/src" ;;
+  cpp)        CSRC="$W/cpp/src" ;;
   *)          CSRC="$W/$G/src" ;;
 esac
 [ -f "$CSRC/parser.c" ] || { echo "no C source for $G at $CSRC" >&2; exit 1; }

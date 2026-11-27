@@ -50,4 +50,5 @@ regen tsx        "$REG/tree-sitter-typescript-0.23.2" tsx
 emit python      "$REG/tree-sitter-python-0.25.0"
 emit lua         "$REG/tree-sitter-lua-0.5.0"
 regen dart "$REG/tree-sitter-dart-orchard-0.3.2" . dart_orchard
+regen cpp         "$REG/tree-sitter-cpp-0.23.4"
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"
