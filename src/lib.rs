@@ -24,6 +24,8 @@ pub mod cpp;
 pub mod dart;
 #[cfg(feature = "lang-dockerfile")]
 pub mod dockerfile;
+#[cfg(feature = "lang-erlang")]
+pub mod erlang;
 #[cfg(feature = "lang-glsl")]
 pub mod glsl;
 #[cfg(feature = "lang-go")]
@@ -256,6 +258,11 @@ pub fn language_ocaml() -> LanguageFn {
     ocaml::LANGUAGE_OCAML
 }
 
+#[cfg(feature = "lang-erlang")]
+pub fn language_erlang() -> LanguageFn {
+    erlang::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -330,5 +337,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("protobuf", language_protobuf()));
     #[cfg(feature = "lang-ocaml")]
     langs.push(("ocaml", language_ocaml()));
+    #[cfg(feature = "lang-erlang")]
+    langs.push(("erlang", language_erlang()));
     langs
 }

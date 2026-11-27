@@ -41,6 +41,7 @@ case "$G" in
   powershell) CSRC="$REG/tree-sitter-powershell-0.26.4/src" ;;
   quint)      CSRC="$HERE/tools/vendored/tree-sitter-quint-5155d17/src" ;;
   ocaml)      CSRC="$W/ocaml/grammars/ocaml/src"; export C_INC="$W/ocaml/common" ;;
+  erlang)     CSRC="$W/erlang/src" ;;
   *)          CSRC="$W/$G/src" ;;
 esac
 [ -f "$CSRC/parser.c" ] || { echo "no C source for $G at $CSRC" >&2; exit 1; }
