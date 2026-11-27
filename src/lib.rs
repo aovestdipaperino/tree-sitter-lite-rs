@@ -26,6 +26,8 @@ pub mod cpp;
 pub mod dart;
 #[cfg(feature = "lang-dockerfile")]
 pub mod dockerfile;
+#[cfg(feature = "lang-elixir")]
+pub mod elixir;
 #[cfg(feature = "lang-erlang")]
 pub mod erlang;
 #[cfg(feature = "lang-fsharp")]
@@ -298,6 +300,11 @@ pub fn language_julia() -> LanguageFn {
     julia::LANGUAGE
 }
 
+#[cfg(feature = "lang-elixir")]
+pub fn language_elixir() -> LanguageFn {
+    elixir::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -384,5 +391,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("lean", language_lean()));
     #[cfg(feature = "lang-julia")]
     langs.push(("julia", language_julia()));
+    #[cfg(feature = "lang-elixir")]
+    langs.push(("elixir", language_elixir()));
     langs
 }

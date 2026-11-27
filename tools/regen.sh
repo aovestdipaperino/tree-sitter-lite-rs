@@ -95,4 +95,5 @@ regen cobol       "$HERE/tools/vendored/tree-sitter-cobol-0.0.1" "." COBOL   # y
 regen fsharp      "$REG/tree-sitter-fsharp-0.3.0" "fsharp"
 regen lean        "$REG/arborium-lean-2.18.1" "grammar"
 regen julia       "$REG/tree-sitter-julia-0.23.1"
+regen elixir      "$REG/tree-sitter-elixir-0.3.5"
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"

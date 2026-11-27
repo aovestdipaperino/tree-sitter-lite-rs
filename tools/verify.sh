@@ -46,6 +46,7 @@ case "$G" in
   fsharp)     CSRC="$W/fsharp/fsharp/src"; export C_INC="$W/fsharp/common" ;;
   lean)       CSRC="$W/lean/grammar/src" ;;
   julia)      CSRC="$W/julia/src" ;;
+  elixir)     CSRC="$W/elixir/src" ;;
   *)          CSRC="$W/$G/src" ;;
 esac
 [ -f "$CSRC/parser.c" ] || { echo "no C source for $G at $CSRC" >&2; exit 1; }
