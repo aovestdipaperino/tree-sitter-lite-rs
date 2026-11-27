@@ -102,4 +102,8 @@ emit perl        "$REG/tree-sitter-perl-1.1.2"
 regen fortran     "$REG/tree-sitter-fortran-0.5.1"
 emit markdown    "$HERE/tools/vendored/tree-sitter-markdown-0.5.3"   # tree-sitter-grammars/tree-sitter-markdown v0.5.3 (f969cd3): tree-sitter-markdown/src, the block grammar
 regen haskell     "$REG/tree-sitter-haskell-0.23.1"
+regen php_only    "$REG/tree-sitter-php-0.24.2" "php_only"
+regen ocaml_interface "$REG/tree-sitter-ocaml-0.24.2" "grammars/interface"
+regen ocaml_type  "$REG/tree-sitter-ocaml-0.24.2" "grammars/type"
+regen fsharp_signature "$REG/tree-sitter-fsharp-0.3.0" "fsharp_signature"
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"

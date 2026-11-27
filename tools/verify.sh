@@ -53,6 +53,10 @@ case "$G" in
   fortran)    CSRC="$W/fortran/src" ;;
   markdown)   CSRC="$HERE/tools/vendored/tree-sitter-markdown-0.5.3/src" ;;
   haskell)    CSRC="$W/haskell/src" ;;
+  php_only)   CSRC="$W/php_only/php_only/src";     export C_INC="$W/php_only/common" ;;
+  ocaml_interface) CSRC="$W/ocaml_interface/grammars/interface/src"; export C_INC="$W/ocaml_interface/common" ;;
+  ocaml_type) CSRC="$W/ocaml_type/grammars/type/src"; export C_INC="$W/ocaml_type/common" ;;
+  fsharp_signature) CSRC="$W/fsharp_signature/fsharp_signature/src"; export C_INC="$W/fsharp_signature/common" ;;
   *)          CSRC="$W/$G/src" ;;
 esac
 [ -f "$CSRC/parser.c" ] || { echo "no C source for $G at $CSRC" >&2; exit 1; }
@@ -61,6 +65,19 @@ PRE=$(mktemp -d)
 cp "$HERE/src/abi.rs" "$PRE/abi.rs"
 cp "$HERE/src/$G/parser.rs" "$PRE/parser.rs"
 if [ -f "$HERE/src/$G/scanner.rs" ]; then export RS_SCANNER="$HERE/src/$G/scanner.rs"; fi
+# php_only, ocaml_interface, ocaml_type and fsharp_signature reuse the scanner of their sibling
+# (same common/scanner.h): the harness wants one file exporting the grammar's own symbol names, so
+# build it from the sibling's scanner.rs by renaming the five exported symbols.
+case "$G" in
+  php_only)         SIB=php ;;
+  ocaml_interface|ocaml_type) SIB=ocaml ;;
+  fsharp_signature) SIB=fsharp ;;
+  *)                SIB= ;;
+esac
+if [ -n "$SIB" ]; then
+  sed "s/tree_sitter_${SIB}_external_scanner_/tree_sitter_${G}_external_scanner_/" "$HERE/src/$SIB/scanner.rs" > "$PRE/scanner.rs"
+  export RS_SCANNER="$PRE/scanner.rs"
+fi
 
 export LITE_DIR="$W" PREGEN="$PRE" C2RS
 export INPUTS_GOLDEN="$HERE/tests/golden/$G.golden" DIRECT=1 SOUP="${SOUP:-8000}" FUZZ="${FUZZ:-10}" PREFIX="${PREFIX:-12}" INCR="${INCR:-5}"

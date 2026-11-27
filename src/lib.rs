@@ -34,6 +34,8 @@ pub mod erlang;
 pub mod fortran;
 #[cfg(feature = "lang-fsharp")]
 pub mod fsharp;
+#[cfg(feature = "lang-fsharp_signature")]
+pub mod fsharp_signature;
 #[cfg(feature = "lang-glsl")]
 pub mod glsl;
 #[cfg(feature = "lang-go")]
@@ -66,12 +68,18 @@ pub mod nix;
 pub mod objc;
 #[cfg(feature = "lang-ocaml")]
 pub mod ocaml;
+#[cfg(feature = "lang-ocaml_interface")]
+pub mod ocaml_interface;
+#[cfg(feature = "lang-ocaml_type")]
+pub mod ocaml_type;
 #[cfg(feature = "lang-pascal")]
 pub mod pascal;
 #[cfg(feature = "lang-perl")]
 pub mod perl;
 #[cfg(feature = "lang-php")]
 pub mod php;
+#[cfg(feature = "lang-php_only")]
+pub mod php_only;
 #[cfg(feature = "lang-powershell")]
 pub mod powershell;
 #[cfg(feature = "lang-protobuf")]
@@ -347,6 +355,26 @@ pub fn language_haskell() -> LanguageFn {
     haskell::LANGUAGE
 }
 
+#[cfg(feature = "lang-php_only")]
+pub fn language_php_only() -> LanguageFn {
+    php_only::LANGUAGE_PHP_ONLY
+}
+
+#[cfg(feature = "lang-ocaml_interface")]
+pub fn language_ocaml_interface() -> LanguageFn {
+    ocaml_interface::LANGUAGE_OCAML_INTERFACE
+}
+
+#[cfg(feature = "lang-ocaml_type")]
+pub fn language_ocaml_type() -> LanguageFn {
+    ocaml_type::LANGUAGE_OCAML_TYPE
+}
+
+#[cfg(feature = "lang-fsharp_signature")]
+pub fn language_fsharp_signature() -> LanguageFn {
+    fsharp_signature::LANGUAGE_SIGNATURE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -447,5 +475,13 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("markdown", language_markdown()));
     #[cfg(feature = "lang-haskell")]
     langs.push(("haskell", language_haskell()));
+    #[cfg(feature = "lang-php_only")]
+    langs.push(("php_only", language_php_only()));
+    #[cfg(feature = "lang-ocaml_interface")]
+    langs.push(("ocaml_interface", language_ocaml_interface()));
+    #[cfg(feature = "lang-ocaml_type")]
+    langs.push(("ocaml_type", language_ocaml_type()));
+    #[cfg(feature = "lang-fsharp_signature")]
+    langs.push(("fsharp_signature", language_fsharp_signature()));
     langs
 }
