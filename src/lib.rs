@@ -50,6 +50,8 @@ pub mod pascal;
 pub mod php;
 #[cfg(feature = "lang-powershell")]
 pub mod powershell;
+#[cfg(feature = "lang-protobuf")]
+pub mod protobuf;
 #[cfg(feature = "lang-python")]
 pub mod python;
 #[cfg(feature = "lang-qbasic")]
@@ -242,6 +244,11 @@ pub fn language_dockerfile() -> LanguageFn {
     dockerfile::LANGUAGE
 }
 
+#[cfg(feature = "lang-protobuf")]
+pub fn language_protobuf() -> LanguageFn {
+    protobuf::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -312,5 +319,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("quint", language_quint()));
     #[cfg(feature = "lang-dockerfile")]
     langs.push(("dockerfile", language_dockerfile()));
+    #[cfg(feature = "lang-protobuf")]
+    langs.push(("protobuf", language_protobuf()));
     langs
 }
