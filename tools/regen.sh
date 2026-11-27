@@ -73,4 +73,5 @@ emit vbnet       "$REG/tree-sitter-vb-dotnet-0.1.0" "." vb_dotnet
 emit batch       "$REG/tree-sitter-batch-0.3.2"
 emit msbasic2    "$REG/tree-sitter-msbasic2-0.2.0"
 emit gwbasic     "$REG/tree-sitter-gwbasic-0.2.0"
+regen nix         "$REG/tree-sitter-nix-0.3.0"
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"

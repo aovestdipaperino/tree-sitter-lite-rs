@@ -34,6 +34,7 @@ case "$G" in
   batch)      CSRC="$REG/tree-sitter-batch-0.3.2/src" ;;
   msbasic2)   CSRC="$REG/tree-sitter-msbasic2-0.2.0/grammar-src" ;;
   gwbasic)    CSRC="$REG/tree-sitter-gwbasic-0.2.0/grammar-src" ;;
+  nix)        CSRC="$W/nix/src" ;;
   *)          CSRC="$W/$G/src" ;;
 esac
 [ -f "$CSRC/parser.c" ] || { echo "no C source for $G at $CSRC" >&2; exit 1; }

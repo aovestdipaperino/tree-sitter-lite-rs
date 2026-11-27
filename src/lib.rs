@@ -34,6 +34,8 @@ pub mod kotlin;
 pub mod lua;
 #[cfg(feature = "lang-msbasic2")]
 pub mod msbasic2;
+#[cfg(feature = "lang-nix")]
+pub mod nix;
 #[cfg(feature = "lang-objc")]
 pub mod objc;
 #[cfg(feature = "lang-pascal")]
@@ -193,6 +195,11 @@ pub fn language_gwbasic() -> LanguageFn {
     gwbasic::LANGUAGE
 }
 
+#[cfg(feature = "lang-nix")]
+pub fn language_nix() -> LanguageFn {
+    nix::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -249,5 +256,7 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("msbasic2", language_msbasic2()));
     #[cfg(feature = "lang-gwbasic")]
     langs.push(("gwbasic", language_gwbasic()));
+    #[cfg(feature = "lang-nix")]
+    langs.push(("nix", language_nix()));
     langs
 }
