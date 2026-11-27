@@ -4,11 +4,11 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Rust](https://img.shields.io/badge/rust-2024-orange.svg)](https://www.rust-lang.org)
 
-Pure-Rust tree-sitter grammars, selected with cargo features. The `lite` tier (the default) is **javascript, typescript, tsx, python, rust, go, java and c**; `medium` adds lua, dart, cpp, c_sharp, scala, kotlin, ruby, swift, bash and php; `full` is still being moved over from the C-based grammar crates, one language at a time.
+Pure-Rust tree-sitter grammars, selected with cargo features. The `lite` tier (the default) is **javascript, typescript, tsx, python, rust, go, java and c**; `medium` adds lua, dart, cpp, c_sharp, scala, kotlin, ruby, swift, bash and php; `full` adds zig, pascal, vbnet, objc, batch, msbasic2, gwbasic, qbasic, nix, glsl, clojure, toml, powershell, quint, dockerfile, protobuf, ocaml, erlang, sql, cobol, fsharp, lean, julia, elixir, r, markdown, markdown_inline, perl, fortran and haskell.
 No C sources, no `build.rs`, no C compiler needed to build the grammars.
 
 The parse tables and lexers are transpiled from the released tree-sitter parsers by
-[c2rs](https://github.com/aovestdipaperino/c2rs). The external scanners that five of the grammars
+[c2rs](https://github.com/aovestdipaperino/c2rs). The external scanners that most of the grammars
 need are hand-ported to Rust. The result plugs into the normal `tree-sitter` runtime through the
 usual `tree_sitter_<name>()` symbols.
 
@@ -67,8 +67,36 @@ language on its own, so a feature never depends on another one by accident.
 | swift | tree-sitter-swift 0.7.4 | ported |
 | bash | tree-sitter-bash 0.25.1 | ported |
 | php | tree-sitter-php 0.24.2, the `php` grammar (regenerated at ABI 15) | ported |
+| zig | tree-sitter-zig (amaanq) | none needed |
+| pascal | tree-sitter-pascal | none needed |
+| vbnet | tree-sitter-vb-dotnet (export `vb_dotnet`) | none needed |
+| objc | tree-sitter-objc | none needed |
+| batch, msbasic2, gwbasic, qbasic | legacy BASIC and batch grammars (`grammar-src/`) | ported |
+| nix | tree-sitter-nix | ported |
+| glsl | tree-sitter-glsl | none needed |
+| clojure | tree-sitter-clojure-orchard | ported |
+| toml | tree-sitter-toml-ng | ported |
+| powershell | tree-sitter-powershell | ported |
+| quint | tree-sitter-quint at 5155d17 (vendored `grammar.json`) | ported |
+| dockerfile | tree-sitter-dockerfile 0.2.0 (vendored `grammar.json`) | ported |
+| protobuf | tree-sitter-protobuf 0.0.1 (vendored `grammar.json`) | ported |
+| ocaml | tree-sitter-ocaml, the `ocaml` grammar | ported |
+| erlang | tree-sitter-erlang | ported |
+| sql | tree-sitter-sequel | ported |
+| cobol | tree-sitter-cobol 0.0.1 (vendored `grammar.json`) | ported |
+| fsharp | tree-sitter-fsharp, the `fsharp` grammar | ported |
+| lean | tree-sitter-lean (arborium) | ported |
+| julia | tree-sitter-julia | ported |
+| elixir | tree-sitter-elixir | ported |
+| r | tree-sitter-r | ported |
+| markdown, markdown_inline | tree-sitter-markdown 0.5.3 (vendored sources) | ported |
+| perl | tree-sitter-perl | ported |
+| fortran | tree-sitter-fortran | ported |
+| haskell | tree-sitter-haskell 0.23.1 (regenerated at ABI 15) | ported |
 
-The first eight are the `lite` tier; lua through php are `medium`. `php_only` is not included yet.
+The first eight are the `lite` tier; lua through php are `medium`; the rest are `full`. Not included yet: `php_only`, `ocaml_interface`, `ocaml_type` and `fsharp_signature`.
+
+Known quirk: haskell's `highlights.scm` has three patterns (lines 134, 153, 171) that the ABI 15 regeneration rejects; injections and locals compile.
 
 The grammars come from the released crate versions, not upstream HEAD: HEAD of tree-sitter-python
 already has grammar changes after 0.25.0.
