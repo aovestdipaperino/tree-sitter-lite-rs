@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Rust](https://img.shields.io/badge/rust-2024-orange.svg)](https://www.rust-lang.org)
 
-Pure-Rust tree-sitter grammars, selected with cargo features. The `lite` tier (the default) is **javascript, typescript, tsx, python, rust, go, java and c**; `medium` and `full` are being moved over from the C-based grammar crates, one language at a time.
+Pure-Rust tree-sitter grammars, selected with cargo features. The `lite` tier (the default) is **javascript, typescript, tsx, python, rust, go, java and c**; `medium` adds lua, dart, cpp, c_sharp, scala, kotlin, ruby, swift, bash and php; `full` is still being moved over from the C-based grammar crates, one language at a time.
 No C sources, no `build.rs`, no C compiler needed to build the grammars.
 
 The parse tables and lexers are transpiled from the released tree-sitter parsers by
@@ -55,6 +55,18 @@ language on its own, so a feature never depends on another one by accident.
 | go | tree-sitter-go 0.25.0 | none needed |
 | java | tree-sitter-java 0.23.5 (regenerated at ABI 15) | none needed |
 | c | tree-sitter-c 0.24.2 | none needed |
+| lua | tree-sitter-lua 0.5.0 | ported |
+| dart | tree-sitter-dart-orchard 0.3.2 (regenerated at ABI 15) | ported |
+| cpp | tree-sitter-cpp 0.23.4 (regenerated at ABI 15) | ported |
+| c_sharp | tree-sitter-c-sharp 0.23.5 | ported |
+| scala | tree-sitter-scala 0.25.1 | ported |
+| kotlin | tree-sitter-kotlin-sg 0.4.1 (regenerated at ABI 15) | ported |
+| ruby | tree-sitter-ruby 0.23.1 (regenerated at ABI 15) | ported |
+| swift | tree-sitter-swift 0.7.4 | ported |
+| bash | tree-sitter-bash 0.25.1 | ported |
+| php | tree-sitter-php 0.24.2, the `php` grammar (regenerated at ABI 15) | ported |
+
+The first eight are the `lite` tier; lua through php are `medium`. `php_only` is not included yet.
 
 The grammars come from the released crate versions, not upstream HEAD: HEAD of tree-sitter-python
 already has grammar changes after 0.25.0.
@@ -87,7 +99,7 @@ The C scanners call `iswspace`, `iswalpha` and `iswdigit`. Under the "C" locale,
 parser always sees, these are ASCII-only, and the ports reproduce exactly that, so behaviour does
 not depend on the platform libc. The Python scanner differs from the C in one place: the C
 serializer can write one byte past its 1024-byte buffer when many indent levels are nested, and the
-port stops one write earlier instead.
+port stops one write earlier instead. The Ruby scanner's heredoc serializer has the same kind of off-by-one in its bound (it can write one byte past the buffer), and the port checks the real size.
 
 ## Layout
 
