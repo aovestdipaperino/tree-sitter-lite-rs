@@ -48,6 +48,8 @@ regen() {  # name  crate-dir  [subdir]  [export name]   (subdir holds src/gramma
   (cd "$sub" && tree-sitter generate --abi 15 src/grammar.json)
   [ -f "$W/$1.array.h" ] && cp "$W/$1.array.h" "$sub/src/tree_sitter/array.h"
   grep -q "define LANGUAGE_VERSION 15" "$sub/src/parser.c" || { echo "$1: generator did not produce ABI 15" >&2; exit 1; }
+  # arborium crates keep the hand-written scanner next to src/, not in it (the C reference needs it in src/).
+  [ -f "$sub/scanner.c" ] && [ ! -f "$sub/src/scanner.c" ] && cp "$sub/scanner.c" "$sub/src/scanner.c"
   emit "$1" "$sub" "${4:-$1}"
 }
 
@@ -91,4 +93,6 @@ regen erlang      "$REG/tree-sitter-erlang-0.16.0"
 regen sql         "$REG/tree-sitter-sequel-0.3.11"
 regen cobol       "$HERE/tools/vendored/tree-sitter-cobol-0.0.1" "." COBOL   # yutaro-sakamoto/tree-sitter-cobol @ 550020d: src/grammar.json only
 regen fsharp      "$REG/tree-sitter-fsharp-0.3.0" "fsharp"
+regen lean        "$REG/arborium-lean-2.18.1" "grammar"
+regen julia       "$REG/tree-sitter-julia-0.23.1"
 echo "regenerated; scanners in src/*/scanner.rs are hand-ported and untouched"

@@ -40,8 +40,12 @@ pub mod gwbasic;
 pub mod java;
 #[cfg(feature = "lang-javascript")]
 pub mod javascript;
+#[cfg(feature = "lang-julia")]
+pub mod julia;
 #[cfg(feature = "lang-kotlin")]
 pub mod kotlin;
+#[cfg(feature = "lang-lean")]
+pub mod lean;
 #[cfg(feature = "lang-lua")]
 pub mod lua;
 #[cfg(feature = "lang-msbasic2")]
@@ -284,6 +288,16 @@ pub fn language_fsharp() -> LanguageFn {
     fsharp::LANGUAGE_FSHARP
 }
 
+#[cfg(feature = "lang-lean")]
+pub fn language_lean() -> LanguageFn {
+    lean::LANGUAGE
+}
+
+#[cfg(feature = "lang-julia")]
+pub fn language_julia() -> LanguageFn {
+    julia::LANGUAGE
+}
+
 /// The enabled languages as `(name, language)` pairs.
 pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     #[allow(unused_mut)]
@@ -366,5 +380,9 @@ pub fn all_languages() -> Vec<(&'static str, LanguageFn)> {
     langs.push(("cobol", language_cobol()));
     #[cfg(feature = "lang-fsharp")]
     langs.push(("fsharp", language_fsharp()));
+    #[cfg(feature = "lang-lean")]
+    langs.push(("lean", language_lean()));
+    #[cfg(feature = "lang-julia")]
+    langs.push(("julia", language_julia()));
     langs
 }

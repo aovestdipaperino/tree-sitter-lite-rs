@@ -44,6 +44,8 @@ case "$G" in
   erlang)     CSRC="$W/erlang/src" ;;
   sql)        CSRC="$W/sql/src" ;;
   fsharp)     CSRC="$W/fsharp/fsharp/src"; export C_INC="$W/fsharp/common" ;;
+  lean)       CSRC="$W/lean/grammar/src" ;;
+  julia)      CSRC="$W/julia/src" ;;
   *)          CSRC="$W/$G/src" ;;
 esac
 [ -f "$CSRC/parser.c" ] || { echo "no C source for $G at $CSRC" >&2; exit 1; }
