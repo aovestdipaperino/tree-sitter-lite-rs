@@ -19,6 +19,7 @@ ap.add_argument("--const", default="LANGUAGE")
 ap.add_argument("--crate")
 ap.add_argument("--mode", choices=["emit", "regen"], default="emit")
 ap.add_argument("--subdir")
+ap.add_argument("--srcdir", default="src", help="directory of parser.c inside the crate/subdir (default src; grammar-src for the legacy-basic crates)")
 ap.add_argument("--export", help="symbol suffix when parser.c exports tree_sitter_<export> instead of tree_sitter_<name>")
 a = ap.parse_args()
 n, feat = a.name, f"lang-{a.name}"
@@ -63,7 +64,7 @@ def regen(s):
 def verify(s):
     if a.crate is None or re.search(rf"^\s*{n}\)", s, re.M):
         return s
-    src = f"{a.subdir}/src" if a.subdir else "src"
+    src = f"{a.subdir}/{a.srcdir}" if a.subdir else a.srcdir
     if a.mode == "emit":
         case = f'  {n})'.ljust(14) + f'CSRC="$REG/{a.crate}/{src}" ;;\n'
     else:
