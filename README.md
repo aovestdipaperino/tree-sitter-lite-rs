@@ -1,3 +1,5 @@
+<p align="center"><img src="https://raw.githubusercontent.com/aovestdipaperino/tree-sitter-grammars-rs/main/assets/logo.svg" alt="tree-sitter-grammars-rs logo" width="160"></p>
+
 # tree-sitter-grammars-rs
 
 [![CI](https://github.com/aovestdipaperino/tree-sitter-grammars-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/aovestdipaperino/tree-sitter-grammars-rs/actions/workflows/ci.yml)
